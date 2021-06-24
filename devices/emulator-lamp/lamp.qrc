@@ -1,0 +1,37 @@
+<RCC>
+    <qresource prefix="/device/1">
+        <!-- Info JSON -->
+        <file>info.json</file>
+
+        <!-- Logo -->
+        <file>info/logo/logo.png</file>
+
+        <!-- Texts -->
+        <file>info/texts/en/description.md</file>
+        <file>info/texts/en/link.txt</file>
+        <file>info/texts/en/title.txt</file>
+
+        <!-- Java script -->
+        <file>src/js/main.qml</file>
+        <file>src/js/protocol.js</file>
+
+        <!-- Icons dark theme -->
+        <file>src/icons/dark/bulb.png</file>
+		<file>src/icons/dark/off.png</file>
+        <file>src/icons/dark/on.png</file>
+        <file>src/icons/dark/unknown.png</file>
+        <file>src/icons/dark/rename.png</file>
+
+        <!-- Icons light theme -->
+        <file>src/icons/light/bulb.png</file>
+        <file>src/icons/light/off.png</file>
+        <file>src/icons/light/on.png</file>
+        <file>src/icons/light/unknown.png</file>
+        <file>src/icons/light/rename.png</file>
+
+        <!-- QML Components -->
+        <file>src/qml/Control.qml</file>
+        <file>src/qml/commands/RenameDevice.qml</file>
+
+    </qresource>
+</RCC>

@@ -1,0 +1,1 @@
+<center><h2>YIoT Lamp emulator</h2></center>

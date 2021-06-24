@@ -21,55 +21,63 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
-import "../../../theme"
-import "../../../components"
+import "qrc:/qml/components"
+import "qrc:/qml/components/validators"
 
-RowLayout {
-    property bool containsMouse: stateSwitch.hovered || btnInfo.containsMouse
-    property int wSz: 120
+Page {
+    id: createUserPage
 
-    id: actionsBlock
-    visible: false
-    anchors.right: parent.right
-    width: 0
+    property var controller: ({ name: "" })
 
-    Switch {
-        id: stateSwitch
-        checked: modelData.deviceController.state != "on"
+    background: Rectangle {
+        color: "transparent"
+    }
 
-        onClicked: {
-            if (modelData.state !== "on") {
-                modelData.deviceController.setStateToHardware("on")
-            } else {
-                modelData.deviceController.setStateToHardware("off")
+    header: Header {
+        id: header
+        title: qsTr("Rename ") + controller.name
+        backAction: function() { showRPiSettings() }
+    }
+
+    Form {
+            id: form
+            stretched: true
+
+            ColumnLayout {
+                Layout.fillHeight: true
+                Layout.fillWidth: true
+                Layout.topMargin: 40
+                Layout.bottomMargin: 20
+
+                spacing: 15
+
+                InputTextField {
+                    id: editName
+                    label: qsTr("Device name")
+                    placeholderText: qsTr("Enter device name")
+                    text: controller.name
+                    maximumLength: 16
+                    validator: ValidatorDeviceName {}
+                }
+
+                FormSecondaryButton {
+                    Layout.topMargin: 20
+                    Layout.bottomMargin: 10
+                    text: qsTr("Save")
+                    onClicked: {
+                        if (editName.text != "") {
+                            if (controller.name != editName.text) {
+                                controller.setNameToHardware(editName.text)
+                            }
+                            header.backAction()
+                        }
+                    }
+                }
+
+                Item {
+                    Layout.fillWidth: true
+                    Layout.fillHeight: true
+                }
             }
         }
-
-    }
-
-    ImageButton {
-        id: btnInfo
-        image: Theme.state + "/info"
-        onClicked: { showDeviceInfo(modelData.deviceController) }
-    }
-
-    Item {
-        Layout.fillWidth: true
-    }
-
-    states: [
-        State {
-            name: "visible"
-            PropertyChanges { target: actionsBlock; width: wSz    }
-            PropertyChanges { target: actionsBlock; visible: true }
-        },
-        State {
-            name: "hidden"
-            PropertyChanges { target: actionsBlock; width: 0       }
-            PropertyChanges { target: actionsBlock; visible: false }
-        }]
-
-    transitions: Transition {
-        NumberAnimation { property: "width"; duration: 100 }
-    }
 }
