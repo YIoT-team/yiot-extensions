@@ -25,7 +25,7 @@ import "qrc:/qml/components"
 import "qrc:/qml/components/validators"
 
 Page {
-    id: createUserPage
+    id: deviceRenamePage
 
     property var controller: ({ name: "" })
 

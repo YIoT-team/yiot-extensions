@@ -27,34 +27,26 @@ Item {
 
     signal commandProcessed(var obj)
 
-    id: device1
+    id: device2
 
     //-----------------------------------------------------------------------------
     function deviceName() {
-        return "Lamp"
+        return "Door Lock"
     }
 
     //-----------------------------------------------------------------------------
     function type() {
-        return "lamp"
+        return "lock"
     }
 
     //-----------------------------------------------------------------------------
     function image() {
-        return "qrc:/device/1/src/icons/%1/bulb.png"
+        return "qrc:/device/2/src/icons/%1/lock.png"
     }
 
     //-----------------------------------------------------------------------------
     function stateImage(model) {
-        if (typeof model.deviceController.currentState !== 'undefined') {
-            if (model.deviceController.currentState) {
-                return "qrc:/device/1/src/icons/%1/on.png"
-            } else {
-                return "qrc:/device/1/src/icons/%1/off.png"
-            }
-        }
-
-        return "qrc:/device/1/src/icons/%1/unknown.png"
+        return "qrc:/device/2/src/icons/%1/lock.png"
     }
 
     //-----------------------------------------------------------------------------
@@ -71,9 +63,9 @@ Item {
 
     //-----------------------------------------------------------------------------
     function
-    onCommand(lamp, json) {
-        if (protocol.onCommand(lamp, json)) {
-            commandProcessed(lamp)
+    onCommand(lock, json) {
+        if (protocol.onCommand(lock, json)) {
+            commandProcessed(lock)
         }
     }
 

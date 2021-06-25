@@ -17,67 +17,53 @@
 //    Lead Maintainer: Roman Kutashenko <kutashenko@gmail.com>
 //  ────────────────────────────────────────────────────────────
 
-import QtQuick 2.12
-import QtQuick.Controls 2.12
-import QtQuick.Layouts 1.12
+//-----------------------------------------------------------------------------
+function
+setState(lock, state) {
+    console.log("Set lock state to : ", state)
 
-import "qrc:/qml/components"
-import "qrc:/qml/components/validators"
+    let json = {}
 
-Page {
-    id: deviceRenamePage
+    json.command = "setState"
+    json.state = state
 
-    property var controller: ({ name: "" })
-
-    background: Rectangle {
-        color: "transparent"
-    }
-
-    header: Header {
-        id: header
-        title: qsTr("Rename ") + controller.name
-        backAction: function() { showRPiSettings() }
-    }
-
-    Form {
-            id: form
-            stretched: true
-
-            ColumnLayout {
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-                Layout.topMargin: 40
-                Layout.bottomMargin: 20
-
-                spacing: 15
-
-                InputTextField {
-                    id: editName
-                    label: qsTr("Device name")
-                    placeholderText: qsTr("Enter device name")
-                    text: controller.name
-                    maximumLength: 16
-                    validator: ValidatorDeviceName {}
-                }
-
-                FormSecondaryButton {
-                    Layout.topMargin: 20
-                    Layout.bottomMargin: 10
-                    text: qsTr("Save")
-                    onClicked: {
-                        if (editName.text != "") {
-                            if (controller.name != editName.text) {
-                                controller.setNameToHardware(editName.text)
-                            }
-                            header.backAction()
-                        }
-                    }
-                }
-
-                Item {
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                }
-            }
-        }
+    lock.invokeCommand(JSON.stringify(json))
 }
+
+//-----------------------------------------------------------------------------
+function
+onCommand(lock, json) {
+    var jsonData
+    var state
+    try {
+        jsonData = JSON.parse(json);
+
+        if (jsonData.command !== "info") {
+            return false
+        }
+
+        if (jsonData.type !== 1) {
+            return false
+        }
+
+        state = jsonData.state
+    } catch (e) {
+        return false
+    }
+
+    if (typeof lock.currentState === "undefined") {
+        Object.defineProperty(lock, 'currentState',
+                {
+                    enumerable: true,
+                    configurable: true,
+                    writable: true,
+                    value: state
+                })
+    } else {
+        lock.currentState = state
+    }
+
+    return true
+}
+
+//-----------------------------------------------------------------------------
