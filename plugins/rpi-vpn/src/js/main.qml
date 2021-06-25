@@ -26,7 +26,7 @@ Item {
     signal activated(string pluginId, string msg)
     signal deactivated(string pluginId)
     readonly property string pluginId: "io.yiot-dev.rpi-vpn"
-    property var supportedDevices: ({})
+    property var supportedDevices
 
     //-----------------------------------------------------------------------------
     function onLoad() {
@@ -66,7 +66,12 @@ Item {
 
     //-----------------------------------------------------------------------------
     function isSupportedDevice(deviceType) {
-        return supportedDevices.includes(deviceType);
+        if(supportedDevices) {
+            return supportedDevices.includes(deviceType);
+        } else {
+            console.log("Property 'supportedDevices' undefined");
+            return false;
+        }
     }
 
     //-----------------------------------------------------------------------------
