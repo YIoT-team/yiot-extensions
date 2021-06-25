@@ -17,10 +17,16 @@
 
         <!-- Icons dark theme -->
         <file>src/icons/dark/lock.png</file>
+        <file>src/icons/dark/locked.png</file>
+        <file>src/icons/dark/unlocked.png</file>
+        <file>src/icons/dark/unknown.png</file>
 		<file>src/icons/dark/rename.png</file>
 
         <!-- Icons light theme -->
         <file>src/icons/light/lock.png</file>
+        <file>src/icons/light/locked.png</file>
+        <file>src/icons/light/unlocked.png</file>
+        <file>src/icons/light/unknown.png</file>
         <file>src/icons/light/rename.png</file>
 
         <!-- QML Components -->

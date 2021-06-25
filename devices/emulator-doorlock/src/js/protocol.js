@@ -42,7 +42,7 @@ onCommand(lock, json) {
             return false
         }
 
-        if (jsonData.type !== 1) {
+        if (jsonData.type !== 2) {
             return false
         }
 
