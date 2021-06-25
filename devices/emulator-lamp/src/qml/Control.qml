@@ -80,11 +80,8 @@ Page {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-//                        if (controller.state !== "on") {
-                            controller.setStateToHardware("on")
-//                        } else {
-//                            controller.setStateToHardware("off")
-//                        }
+                        p.state = !controller.currentState ? "on" : "off"
+                        controller.js.protocol.setState(controller, !controller.currentState)
                     }
                 }
             }
@@ -100,8 +97,7 @@ Page {
         }
     }
 
-//    state: typeof controller === "undefined" ? "unknown" : controller.state
-    state: "unknown"
+    state: "undefined"
     states: [
         State {
             name: "unknown"
@@ -119,4 +115,22 @@ Page {
             PropertyChanges { target: stateImage; img: "off" }
         }
     ]
+
+    Connections {
+        target: (controller && controller.js) ? controller.js : null
+        ignoreUnknownSignals: true
+        function onCommandProcessed(obj) {
+            if (obj === controller) {
+                updateState()
+            }
+        }
+    }
+
+    onControllerChanged: {
+        updateState()
+    }
+
+    function updateState() {
+        p.state = controller.currentState ? "on" : "off"
+    }
 }

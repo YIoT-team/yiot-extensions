@@ -24,7 +24,8 @@ import "./protocol.js" as DeviceProtocol
 Item {
     property var controlPageIdx: -1
     property var protocol: DeviceProtocol
-    property var helpers: Helpers
+
+    signal commandProcessed(var obj)
 
     id: device0
 
@@ -45,6 +46,14 @@ Item {
 
     //-----------------------------------------------------------------------------
     function stateImage(model) {
+        if (typeof model.deviceController.currentState !== 'undefined') {
+            if (model.deviceController.currentState) {
+                return "qrc:/device/1/src/icons/%1/on.png"
+            } else {
+                return "qrc:/device/1/src/icons/%1/off.png"
+            }
+        }
+
         return "qrc:/device/1/src/icons/%1/unknown.png"
     }
 
@@ -61,5 +70,12 @@ Item {
     }
 
     //-----------------------------------------------------------------------------
+    function
+    onCommand(lamp, json) {
+        if (protocol.onCommand(lamp, json)) {
+            commandProcessed(lamp)
+        }
+    }
 
+    //-----------------------------------------------------------------------------
 }
