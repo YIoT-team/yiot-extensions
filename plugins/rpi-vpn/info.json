@@ -3,5 +3,8 @@
 	"size": "4678",
 	"languages": [
 		"en"
-	]
+        ],
+        "supportedDevices": [
+                "pc"
+        ]
 }
