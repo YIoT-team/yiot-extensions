@@ -42,13 +42,23 @@ Rectangle {
             id: nameText
             Layout.leftMargin: 30
             text: emulator_name
-            color: Theme.primaryTextColor
+            color: ma.containsMouse ? Theme.linkTextColor : Theme.primaryTextColor
             verticalAlignment: Text.AlignVCenter
             font.pointSize: 14
 
             Layout.alignment: Qt.AlignLeft
             Layout.fillHeight: true
             Layout.fillWidth: true
+
+            MouseArea {
+                id: ma
+                enabled: emulator_log_url !== ""
+                anchors.fill: parent
+                hoverEnabled: true
+                onClicked: {
+                    Qt.openUrlExternally(emulator_log_url)
+                }
+            }
         }
 
         FormSecondaryButton {
@@ -61,4 +71,3 @@ Rectangle {
         }
     }
 }
-

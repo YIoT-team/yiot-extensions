@@ -35,7 +35,10 @@ Item {
     property ListModel items: ListModel {}
 
     property string user: "test"
-    readonly property string baseURL: "http://127.0.0.1:8080"
+    readonly property string baseHost: "159.89.15.12"
+    readonly property string webSockURL: "ws://" + baseHost + ":8080/ws&"
+    readonly property string portalURL: "http://" + baseHost
+    readonly property string baseURL: portalURL + ":8081"
 
     readonly property string getListEndpoint: "/device/list"
     readonly property string getCreateEndpoint: "/device/create"
@@ -82,7 +85,9 @@ Item {
                                              "emulator_name": emulator.name,
                                              "emulator_user": emulator.user,
                                              "emulator_port": emulator.port,
-                                             "emulator_status": emulator.status
+                                             "emulator_status": emulator.status,
+                                             "emulator_log_url": portalURL + ":" + emulator.port.toString(10),
+                                             "emulator_ws_url": webSockURL + user
                                          })
                         }
                     } else {
@@ -159,14 +164,5 @@ Item {
 
     Component.onCompleted: {
         updateList()
-
-        // Test
-        items.append({
-             "emulator_id": "123",
-             "emulator_name": "123",
-             "emulator_user": "123",
-             "emulator_port": "123",
-             "emulator_status": "123"
-         })
     }
 }
