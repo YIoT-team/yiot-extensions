@@ -38,7 +38,7 @@ Page {
 
     header: Header {
         title: qsTr("Websocket")
-        backAction: function() { showServices() }
+        backAction: function() { showServicesList() }
     }
 
     Form {

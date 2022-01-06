@@ -37,9 +37,7 @@ Page {
 
     header: Header {
         title: qsTr("Emulators")
-        showBackButton: false
-        showMenuButton: true
-        showSettingsButton: true
+        backAction: function() { showServicesList() }
     }
 
     Form {
