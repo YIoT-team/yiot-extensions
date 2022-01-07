@@ -61,9 +61,9 @@ Rectangle {
             }
         }
 
-        FormSecondaryButton {
+        ImageButton {
             Layout.rightMargin: 30
-            text: qsTr("Delete")
+            image: Theme.state + "/delete"
             onClicked: {
                 base.removeEmulator(emulator_id)
                 console.log(">>> Delete emulator: ", emulator_name)

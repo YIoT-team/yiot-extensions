@@ -38,6 +38,9 @@ Page {
     header: Header {
         title: qsTr("Emulators")
         backAction: function() { showServicesList() }
+        showBackButton: true
+        plusAction: function() { controller.js.create() }
+        showPlusButton: true
     }
 
     Form {
@@ -61,14 +64,6 @@ Page {
 
             Layout.bottomMargin: 30
             Layout.alignment: Qt.AlignHCenter
-
-            FormPrimaryButton {
-                text: qsTr("Create emulator")
-                Layout.alignment: Qt.AlignBottom | Qt.AlignHCenter
-                onClicked: {
-                    controller.js.create()
-                }
-            }
 
             FormPrimaryButton {
                 visible: true
