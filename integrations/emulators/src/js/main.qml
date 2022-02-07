@@ -22,6 +22,7 @@ import Qt.labs.settings 1.0
 
 Item {
     property var controlPageIdx: -1
+    property bool needLogin: true
 
     signal activated(string integrationId, string msg)
     signal deactivated(string integrationId)
