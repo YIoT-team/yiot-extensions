@@ -30,7 +30,7 @@ Page {
     property var controller
     property alias deviceName: header.title
 
-    id: rpiPage
+    id: cv2sePage
 
     background: Rectangle {
         color: "transparent"
@@ -38,7 +38,7 @@ Page {
 
     header: Header {
         id: header
-        title: qsTr("RPi Control")
+        title: qsTr("EOC650")
         backAction: function() { showDevices() }
     }
 
@@ -93,9 +93,6 @@ Page {
 
         function onNameChanged() {
             deviceName = controller.name
-        }
-
-        function onCommandProcessed(obj) {
         }
     }
 
