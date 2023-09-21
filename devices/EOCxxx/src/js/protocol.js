@@ -19,14 +19,14 @@
 
 //-----------------------------------------------------------------------------
 function
-createUser(pc, user, pass) {
-    console.log("Create User: ", user)
+setRootPassword(pc, pass) {
+    console.log("Set Root password")
 
     let json = {}
 
     json.command = "script"
     json.script = "create-user.sh"
-    json.params = [user, pass]
+    json.params = ["root", pass]
 
     pc.invokeCommand(JSON.stringify(json))
 }
@@ -92,14 +92,14 @@ setupVPNRouter(pc, apName, apPass, vpnProvider, user, password) {
 
 //-----------------------------------------------------------------------------
 function
-enableSSH(pc) {
+enableSSH(pc, enable) {
     console.log("Enable SSH:")
 
     let json = {}
 
     json.command = "script"
     json.script = "enable-ssh.sh"
-    json.params = []
+    json.params = [enable]
 
     pc.invokeCommand(JSON.stringify(json))
 }
@@ -108,6 +108,31 @@ enableSSH(pc) {
 function
 processingText() {
     return ""
+}
+
+//-----------------------------------------------------------------------------
+function
+onCommand(pc, json) {
+    var jsonData
+    try {
+        jsonData = JSON.parse(json);
+
+        if (jsonData.command !== "info") {
+            return false
+        }
+
+        if (jsonData.type !== 5) {
+            return false
+        }
+
+        pc.lanIp = jsonData.br_lan
+        pc.lan24Ip = jsonData.br_lan24
+        pc.version = jsonData.version
+    } catch (e) {
+        return false
+    }
+
+    return true
 }
 
 //-----------------------------------------------------------------------------

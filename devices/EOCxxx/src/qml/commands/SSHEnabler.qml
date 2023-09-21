@@ -33,7 +33,7 @@ Page {
     }
 
     header: Header {
-        title: qsTr("SSH enable")
+        title: qsTr("SSH")
         backAction: function() { showRPiSettings() }
     }
 
@@ -56,13 +56,23 @@ Page {
                     Layout.bottomMargin: 0
                 }
 
-                FormSecondaryButton {
+                FormPrimaryButton {
                     Layout.topMargin: 20
                     Layout.bottomMargin: 10
                     text: qsTr("Enable")
                     onClicked: {
-                        showCmdProcessing(rpiPage.controller)
-                        rpiPage.controller.js.protocol.enableSSH(rpiPage.controller)
+                        showCmdProcessing(engeniusPage.controller)
+                        engeniusPage.controller.js.protocol.enableSSH(engeniusPage.controller, true)
+                    }
+                }
+
+                FormSecondaryButton {
+                    Layout.topMargin: 20
+                    Layout.bottomMargin: 10
+                    text: qsTr("Disable")
+                    onClicked: {
+                        showCmdProcessing(engeniusPage.controller)
+                        engeniusPage.controller.js.protocol.enableSSH(engeniusPage.controller, false)
                     }
                 }
 

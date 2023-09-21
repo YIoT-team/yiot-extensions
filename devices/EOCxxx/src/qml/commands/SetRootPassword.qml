@@ -25,14 +25,14 @@ import "qrc:/qml/components"
 import "qrc:/qml/components/validators"
 
 Page {
-    id: createUserPage
+    id: setRootPasswordPage
 
     background: Rectangle {
         color: "transparent"
     }
 
     header: Header {
-        title: qsTr("Create User")
+        title: qsTr("Set Root password")
         backAction: function() { showRPiSettings() }
     }
 
@@ -47,13 +47,6 @@ Page {
                 Layout.bottomMargin: 20
 
                 spacing: 15
-
-                InputTextField {
-                    id: userName
-                    label: qsTr("User name")
-                    placeholderText: qsTr("Enter new user name")
-                    validator: ValidatorUserName {}
-                }
 
                 Password {
                     id: pass1
@@ -75,8 +68,8 @@ Page {
                     text: qsTr("Save")
                     onClicked: {
                         if(validateInputs()) {
-                            showCmdProcessing(rpiPage.controller)
-                            rpiPage.controller.js.protocol.createUser(rpiPage.controller, userName.text, pass1.text)
+                            showCmdProcessing(engeniusPage.controller)
+                            engeniusPage.controller.js.protocol.setRootPassword(engeniusPage.controller, pass1.text)
                         }
                     }
                 }
@@ -92,13 +85,8 @@ Page {
         }
 
         function validateInputs() {
-            if (userName.text == "") {
-                showPopupError(qsTr("Set new User name"), errorPopupClick)
-                return false
-            }
-
             if (pass1.text == "") {
-                showPopupError(qsTr("Set new User password"), errorPopupClick)
+                showPopupError(qsTr("Set new Root password"), errorPopupClick)
                 return false
             }
 

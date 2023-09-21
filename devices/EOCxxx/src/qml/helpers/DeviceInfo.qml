@@ -18,59 +18,28 @@
 //  ────────────────────────────────────────────────────────────
 
 import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Layouts 1.12
 
-import "./protocol.js" as DeviceProtocol
-import "./helpers.js" as Helpers
+import "qrc:/qml/theme"
+import "qrc:/qml/components"
 
-Item {
-    property var controlPageIdx: -1
-    property var protocol: DeviceProtocol
-    property var helpers: Helpers
+GridLayout {
+    property var lanIp: "---"
+    property var lan24Ip: "---"
+    property var version: "---"
 
-    signal commandProcessed(var obj)
+    columns: 2
 
-    id: device0
+    InfoText { text: qsTr("LAN IP :"); horizontalAlignment: Text.AlignRight }
+    InfoText { text: lanIp }
 
-    //-----------------------------------------------------------------------------
-    function deviceName() {
-        return "EOC650"
-    }
+    InfoText { text: qsTr("LAN24 IP :"); horizontalAlignment: Text.AlignRight }
+    InfoText { text: lan24Ip }
 
-    //-----------------------------------------------------------------------------
-    function type() {
-        return "router"
-    }
+    InfoText { text: qsTr("Web UI :"); horizontalAlignment: Text.AlignRight }
+    LinkText { text: "http://" + lanIp; link: "http://" + lanIp}
 
-    //-----------------------------------------------------------------------------
-    function image() {
-        return "qrc:/device/5/src/icons/%1/engenius.png"
-    }
-
-    //-----------------------------------------------------------------------------
-    function stateImage(model) {
-        return "qrc:/qml/resources/icons/%1/wifi-dimmed.png"
-    }
-
-    //-----------------------------------------------------------------------------
-    function
-    controlTiny(model) {
-        return "qrc:/qml/components/devices/GeneralDeviceControls.qml"
-    }
-
-    //-----------------------------------------------------------------------------
-    function
-    controlTypeTiny(model) {
-        return "qrc:/qml/components/devices/GeneralCategoryControls.qml"
-    }
-
-    //-----------------------------------------------------------------------------
-    function
-    onCommand(router, json) {
-        if (protocol.onCommand(router, json)) {
-            commandProcessed(router)
-        }
-    }
-
-    //-----------------------------------------------------------------------------
-
+    InfoText { text: qsTr("Version :"); horizontalAlignment: Text.AlignRight }
+    InfoText { text: version }
 }

@@ -22,15 +22,16 @@ import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 
 import "./commands"
+import "./helpers"
 import "qrc:/qml/theme"
 import "qrc:/qml/components"
 import "qrc:/qml/components/validators"
 
 Page {
-    property var controller
+    property var controller: ({ lanIp: "", lan24Ip: "", version: "" })
     property alias deviceName: header.title
 
-    id: cv2sePage
+    id: engeniusPage
 
     background: Rectangle {
         color: "transparent"
@@ -42,48 +43,55 @@ Page {
         backAction: function() { showDevices() }
     }
 
-    SwipeView {
-        readonly property int listIdx: 0
-        readonly property int renameDeviceIdx: 1
-        readonly property int createUserIdx: 2
-        readonly property int staticipIdx: 3
-        readonly property int accessPointIdx: 4
-        readonly property int sshIdx: 5
-        readonly property int vpnRouterIdx: 6
-
-        property int backPageIdx: listIdx
-
-        id: settingsSwipeView
+    ColumnLayout {
         anchors.fill: parent
-        interactive: false
-        currentIndex: listIdx
 
-        ControlsList {
-            id: settingsListPage
+        DeviceInfo {
+            id: grid
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: 20
+            Layout.bottomMargin: 20
+
+            lanIp: controller.lanIp
+            lan24Ip: controller.lan24Ip
+            version: controller.version
         }
 
-        RenameDevice {
-            id: renameDevicePage
-        }
+        SwipeView {
+            readonly property int listIdx: 0
+            readonly property int renameDeviceIdx: 1
+            readonly property int setRootPassIdx: 2
+            readonly property int staticipIdx: 3
+            readonly property int sshIdx: 4
 
-        CreateUser {
-            id: createUserPage
-        }
+            property int backPageIdx: listIdx
 
-        StaticIP {
-            id: staticipPage
-        }
+            id: settingsSwipeView
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            interactive: false
+            currentIndex: listIdx
 
-        AccessPoint {
-            id: accessPointPage
-        }
+            ControlsList {
+                id: settingsListPage
+            }
 
-        SSHEnabler {
-            id: sshPage
-        }
+            RenameDevice {
+                id: renameDevicePage
+            }
 
-        VPNrouter {
-            id: vpnRouterPage
+            SetRootPassword {
+                id: setRootPasswdPage
+            }
+
+            StaticIP {
+                id: staticipPage
+            }
+
+            SSHEnabler {
+                id: sshPage
+            }
         }
     }
 
@@ -109,11 +117,8 @@ Page {
 
     function swipeSettingsShow(idx) {
         settingsSwipeView.currentIndex = idx
-        if (idx != 0) {
-            header.visible = false;
-        } else {
-            header.visible = true;
-        }
+        header.visible = idx == 0
+        grid.visible = header.visible
 
         for (var i = 0; i < settingsSwipeView.count; ++i) {
             var item = settingsSwipeView.itemAt(i)
@@ -121,29 +126,21 @@ Page {
         }
     }
 
-     function showRPiSettings() {
+    function showRPiSettings() {
         swipeSettingsShow(settingsSwipeView.listIdx)
-     }
+    }
 
-    function showCreateUserPage() {
-        swipeSettingsShow(settingsSwipeView.createUserIdx)
+    function showSetRootPasswdPage() {
+        swipeSettingsShow(settingsSwipeView.setRootPassIdx)
     }
 
     function showRenameDevicePage(controller) {
-            renameDevicePage.controller = controller
-            swipeSettingsShow(settingsSwipeView.renameDeviceIdx)
-        }
+        renameDevicePage.controller = controller
+        swipeSettingsShow(settingsSwipeView.renameDeviceIdx)
+    }
 
     function showStaticipPage() {
         swipeSettingsShow(settingsSwipeView.staticipIdx)
-    }
-
-    function showAccessPointPage() {
-        swipeSettingsShow(settingsSwipeView.accessPointIdx)
-    }
-
-    function showVPNrouterPage() {
-        swipeSettingsShow(settingsSwipeView.vpnRouterIdx)
     }
 
     function showSSHPage() {
@@ -155,30 +152,6 @@ Page {
     }
 
     function errorPopupClick() {
-    }
-
-    function validateInputs() {
-        if (userName.text == "") {
-            showPopupError(qsTr("Set new User name"), errorPopupClick)
-            return false
-        }
-
-        if (pass1.text == "") {
-            showPopupError(qsTr("Set new User password"), errorPopupClick)
-            return false
-        }
-
-        if (pass1.text != pass2.text) {
-            showPopupError(qsTr("Passwords are not equal"), errorPopupClick)
-            return false
-        }
-
-        if (staticIP.text == "") {
-            showPopupError(qsTr("Static IP address isn't valid"), errorPopupClick)
-            return false
-        }
-
-        return true
     }
 
 }

@@ -48,10 +48,10 @@ Page {
                 }
             }
             ListElement {
-                name: qsTr("Create User")
+                name: qsTr("Set Root password")
                 image: "create-user"
                 property var action: function(ctx) {
-                    showCreateUserPage()
+                    showSetRootPasswdPage()
                 }
             }
             ListElement {
@@ -61,15 +61,9 @@ Page {
                     showStaticipPage()
                 }
             }
-            //ListElement {
-            //    name: qsTr("Access Point")
-            //    image: "access-point"
-            //    property var action: function(ctx) {
-            //        showAccessPointPage()
-            //    }
-            //}
+
             ListElement {
-                name: qsTr("Enable SSH")
+                name: qsTr("SSH enable/disable")
                 image: "ssh"
                 property var action: function(ctx) {
                     showSSHPage()

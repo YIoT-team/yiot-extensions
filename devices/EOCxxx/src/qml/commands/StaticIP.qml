@@ -59,7 +59,7 @@ Page {
                     id: interfaceCb
                     Layout.leftMargin: 12
                     Layout.topMargin: 0
-                    items: ["wlan0", "eth0"]
+                    items: ["br-lan", "br-lan24"]
                 }
 
                 InputTextField {
@@ -72,7 +72,7 @@ Page {
                     Connections {
                         target: deviceIP
                         function onReady() {
-                            gatewayIP.text = rpiPage.controller.js.helpers.gatewayFromIP(deviceIP.text, gatewayIP.text);
+                            gatewayIP.text = engeniusPage.controller.js.helpers.gatewayFromIP(deviceIP.text, gatewayIP.text);
                         }
                     }
                 }
@@ -109,8 +109,8 @@ Page {
                     text: qsTr("Save")
                     onClicked: {
                         if(validateInputs()) {
-                            showCmdProcessing(rpiPage.controller)
-                            rpiPage.controller.js.protocol.setNetworkParams(rpiPage.controller,
+                            showCmdProcessing(engeniusPage.controller)
+                            engeniusPage.controller.js.protocol.setNetworkParams(engeniusPage.controller,
                                                       interfaceCb.text,
                                                       "true", // Force static
                                                       deviceIP.text,
