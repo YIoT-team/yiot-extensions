@@ -17,8 +17,8 @@
 //    Lead Maintainer: Roman Kutashenko <kutashenko@gmail.com>
 //  ────────────────────────────────────────────────────────────
 
+import QtCore
 import QtQuick 2.12
-import Qt.labs.settings 1.0
 
 Item {
     property var controlPageIdx: -1
